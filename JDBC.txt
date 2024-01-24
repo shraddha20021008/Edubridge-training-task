@@ -1,0 +1,56 @@
+package com.edu.connection.jdbc;
+
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+
+public class Student {
+     public static void main(String[] args) throws ClassNotFoundException, SQLException {
+				
+				
+				int studentid;
+				String studentname,studentemail;
+				float studentfees;
+				Date studentdob;
+				
+				
+				
+				String driver ="com.mysql.cj.jdbc.Driver";
+				String un = "root";
+				String pass="root";
+				String url ="jdbc:mysql://localhost:3306/batch10426";
+				
+				
+				Connection conn = null;
+				Statement stmt = null;
+				ResultSet rs=null;
+				
+				
+				
+				
+				
+				//Step 1: load the driver
+				Class.forName(driver);
+				conn=DriverManager.getConnection(url,un,pass);
+				stmt=conn.createStatement();
+				String s="select * from student";
+				rs=stmt.executeQuery(s);
+				System.out.println(rs);
+				System.out.println("ID\t name\t fees\t DOB\t Email");
+			      while(rs.next()) {
+			    	  studentid = rs.getInt("ID");
+						studentname = rs.getString("name");
+						studentfees=rs.getFloat("fees");
+						studentemail=rs.getString("Email");
+						studentdob=rs.getDate("date");
+						
+						System.out.println(studentid+"\t"+studentname+"\t"+studentfees+"\t"+studentdob+"\t"+studentemail);
+					}
+			      }
+}
+	
