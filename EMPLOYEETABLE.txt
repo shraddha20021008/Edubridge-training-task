@@ -1,0 +1,87 @@
+//CREATE THE TABLE EMPLOYEE
+
+mysql> create table Employee(eid int primary key,ename varchar(39) not null,eemail varchar(40) not null unique,ephone varchar(10) not null unique,esalary float not null check(esalary>10000));
+Query OK, 0 rows affected (0.06 sec)
+
+//INSERT THE RECORDS
+
+mysql> insert into Employee values(1,'Rahul','Rahul@123','9087897867',30000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values(2,'Rushi','Rushi@123','9687895667',40000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Employee values(3,'Sham','Sham@123','7856895667',20000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Employee;
++-----+-------+-----------+------------+---------+
+| eid | ename | eemail    | ephone     | esalary |
++-----+-------+-----------+------------+---------+
+|   1 | Rahul | Rahul@123 | 9087897867 |   30000 |
+|   2 | Rushi | Rushi@123 | 9687895667 |   40000 |
+|   3 | Sham  | Sham@123  | 7856895667 |   20000 |
++-----+-------+-----------+------------+---------+
+3 rows in set (0.00 sec)
+
+//FOR UPDATE
+
+mysql> update Employee set eemail='Rahulpatil@123' where eid=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Employee;
++-----+-------+----------------+------------+---------+
+| eid | ename | eemail         | ephone     | esalary |
++-----+-------+----------------+------------+---------+
+|   1 | Rahul | Rahulpatil@123 | 9087897867 |   30000 |
+|   2 | Rushi | Rushi@123      | 9687895667 |   40000 |
+|   3 | Sham  | Sham@123       | 7856895667 |   20000 |
++-----+-------+----------------+------------+---------+
+3 rows in set (0.00 sec)
+
+
+
+mysql> update Employee set ephone='7656435643' where eid=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Employee;
++-----+-------+----------------+------------+---------+
+| eid | ename | eemail         | ephone     | esalary |
++-----+-------+----------------+------------+---------+
+|   1 | Rahul | Rahulpatil@123 | 9087897867 |   30000 |
+|   2 | Rushi | Rushi@123      | 7656435643 |   40000 |
+|   3 | Sham  | Sham@123       | 7856895667 |   20000 |
++-----+-------+----------------+------------+---------+
+3 rows in set (0.00 sec)
+
+
+
+mysql> update Employee set esalary=15000 where eid=3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Employee;
++-----+-------+----------------+------------+---------+
+| eid | ename | eemail         | ephone     | esalary |
++-----+-------+----------------+------------+---------+
+|   1 | Rahul | Rahulpatil@123 | 9087897867 |   30000 |
+|   2 | Rushi | Rushi@123      | 7656435643 |   40000 |
+|   3 | Sham  | Sham@123       | 7856895667 |   15000 |
++-----+-------+----------------+------------+---------+
+3 rows in set (0.00 sec)
+
+//FOR DELETE
+
+mysql> delete from Employee where eid=2;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Employee;
++-----+-------+----------------+------------+---------+
+| eid | ename | eemail         | ephone     | esalary |
++-----+-------+----------------+------------+---------+
+|   1 | Rahul | Rahulpatil@123 | 9087897867 |   30000 |
+|   3 | Sham  | Sham@123       | 7856895667 |   15000 |
++-----+-------+----------------+------------+---------+
+2 rows in set (0.00 sec)

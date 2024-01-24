@@ -1,0 +1,547 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.34 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table department(deptid int primary key,dept name varchar(20) not null);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'name varchar(20) not null)' at line 1
+mysql> create table department(deptid int primary key,deptname varchar(20) not null);
+ERROR 1046 (3D000): No database selected
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| batch10426         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use batch10426;
+Database changed
+mysql> create table department(deptid int primary key,deptname varchar(20) not null);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc department;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| deptid   | int         | NO   | PRI | NULL    |       |
+| deptname | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table employee1(empid int primary key,ename varchar(30) nt null,esal float check(esal>20000) not null,deptid int foreign key(deptid int ,references department(deptid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nt null,esal float check(esal>20000) not null,deptid int foreign key(deptid int ' at line 1
+mysql> create table employee1(empid int primary key,ename varchar(30) nt null,esal float check(esal>20000) not null,deptid int, foreign key(deptid) references department(deptid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'nt null,esal float check(esal>20000) not null,deptid int, foreign key(deptid) re' at line 1
+mysql> create table employee1(empid int primary key,ename varchar(30) not null, esal float check(esal>20000) not null, deptid int, foreign key(deptid) references department(deptid));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc employee1;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| empid  | int         | NO   | PRI | NULL    |       |
+| ename  | varchar(30) | NO   |     | NULL    |       |
+| esal   | float       | NO   |     | NULL    |       |
+| deptid | int         | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into department values(10,'CSE');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values(20,'ECE');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values(30,'Civil');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values(40,'Mech');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee1(empid,ename,esal,deptid) values(1111,'kiran',44500,10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee1(empid,ename,esal,deptid) values(1112,'ramesh',22000,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee1(empid,ename,esal,deptid) values(1113,'uday',77000,30);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee1(empid,ename,esal,deptid) values(1114,'ram',33000,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee1;
++-------+--------+-------+--------+
+| empid | ename  | esal  | deptid |
++-------+--------+-------+--------+
+|  1111 | kiran  | 44500 |     10 |
+|  1112 | ramesh | 22000 |     20 |
+|  1113 | uday   | 77000 |     30 |
+|  1114 | ram    | 33000 |     20 |
++-------+--------+-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> insert into employee1(empid,ename,esal,deptid) values(1115,'sam'43000,10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '43000,10)' at line 1
+mysql> insert into employee1(empid,ename,esal,deptid) values(1115,'sam',43000,10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee1;
++-------+--------+-------+--------+
+| empid | ename  | esal  | deptid |
++-------+--------+-------+--------+
+|  1111 | kiran  | 44500 |     10 |
+|  1112 | ramesh | 22000 |     20 |
+|  1113 | uday   | 77000 |     30 |
+|  1114 | ram    | 33000 |     20 |
+|  1115 | sam    | 43000 |     10 |
++-------+--------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> create table Product(pid int primary key,pname varchar(30) not null,price float check
+    -> (price>100);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> create table Product(pid int primary key,pname varchar(30) not null,price float check(price>100));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table customer(cid int primary key,cname varchar(40) not null,cphone varchar(10) not null);
+Query OK, 0 rows affected (0.03 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',foreign key(pid) references product(pid),foreign key(cid) references customer(c' at line 1
+mysql> create table orders(oid int primary key,pid int,cid int,foreign key(pid) references product(pid),foreign key(cid) references customer(cid));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc orders;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| oid   | int  | NO   | PRI | NULL    |       |
+| pid   | int  | YES  | MUL | NULL    |       |
+| cid   | int  | YES  | MUL | NULL    |       |
++-------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc product;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pid   | int         | NO   | PRI | NULL    |       |
+| pname | varchar(30) | NO   |     | NULL    |       |
+| price | float       | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc customer;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cid    | int         | NO   | PRI | NULL    |       |
+| cname  | varchar(40) | NO   |     | NULL    |       |
+| cphone | varchar(10) | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into product(pid,pname,price) values(1,'Phone',3000');
+    '>
+    '> ^C
+mysql> insert into product(pid,pname,price) values(1,'Phone',3000');
+    '> insert into product(pid,pname,price) values(1,'Phone',3000);
+    '> ^C
+mysql> insert into product(pid,pname,price) values(1,'Phone',3000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into product(pid,pname,price) values(2,'Laptop',20000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product(pid,pname,price) values(3,'Tablet',10000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer(cid,cname,cphone) values(1,'Rahul','5678902434');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer(cid,cname,cphone) values(2,'sham','7890564322');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer(cid,cname,cphone) values(3,'Ram','8967564322');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customer;
++-----+-------+------------+
+| cid | cname | cphone     |
++-----+-------+------------+
+|   1 | Rahul | 5678902434 |
+|   2 | sham  | 7890564322 |
+|   3 | Ram   | 8967564322 |
++-----+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+|   1 | Phone  |  3000 |
+|   2 | Laptop | 20000 |
+|   3 | Tablet | 10000 |
++-----+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into orders(oid,pid,cid)  values(20,2,1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from orders;
++-----+------+------+
+| oid | pid  | cid  |
++-----+------+------+
+|  20 |    2 |    1 |
++-----+------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into orders(oid,pid,cid)  values(22,3,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from orders;
++-----+------+------+
+| oid | pid  | cid  |
++-----+------+------+
+|  20 |    2 |    1 |
+|  22 |    3 |    1 |
++-----+------+------+
+2 rows in set (0.00 sec)
+
+mysql> insert into orders(oid,pid,cid)  values(24,1,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from orders;
++-----+------+------+
+| oid | pid  | cid  |
++-----+------+------+
+|  20 |    2 |    1 |
+|  22 |    3 |    1 |
+|  24 |    1 |    3 |
++-----+------+------+
+3 rows in set (0.00 sec)
+
+mysql> insert into orders(oid,pid,cid)  values(26,2,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *from orders;
++-----+------+------+
+| oid | pid  | cid  |
++-----+------+------+
+|  20 |    2 |    1 |
+|  22 |    3 |    1 |
+|  24 |    1 |    3 |
+|  26 |    2 |    1 |
++-----+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer;
++-----+-------+------------+
+| cid | cname | cphone     |
++-----+-------+------------+
+|   1 | Rahul | 5678902434 |
+|   2 | sham  | 7890564322 |
+|   3 | Ram   | 8967564322 |
++-----+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customer where cname like 'R%';
++-----+-------+------------+
+| cid | cname | cphone     |
++-----+-------+------------+
+|   1 | Rahul | 5678902434 |
+|   3 | Ram   | 8967564322 |
++-----+-------+------------+
+2 rows in set (0.01 sec)
+
+mysql> select * from customer where cname like '%l;
+    '> ^C
+mysql> select * from customer where cname like '%l';
++-----+-------+------------+
+| cid | cname | cphone     |
++-----+-------+------------+
+|   1 | Rahul | 5678902434 |
++-----+-------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where cname like 'R_m';
++-----+-------+------------+
+| cid | cname | cphone     |
++-----+-------+------------+
+|   3 | Ram   | 8967564322 |
++-----+-------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where cname ='R_m';
+Empty set (0.00 sec)
+
+mysql> select * from customer where cname like 'R_m';
++-----+-------+------------+
+| cid | cname | cphone     |
++-----+-------+------------+
+|   3 | Ram   | 8967564322 |
++-----+-------+------------+
+1 row in set (0.00 sec)
+
+mysql> desc customer;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cid    | int         | NO   | PRI | NULL    |       |
+| cname  | varchar(40) | NO   |     | NULL    |       |
+| cphone | varchar(10) | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc student;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| studentid    | int         | NO   | PRI | NULL    |       |
+| studentname  | varchar(40) | NO   |     | NULL    |       |
+| studentemail | varchar(40) | YES  |     | NULL    |       |
+| studentfees  | float       | NO   |     | NULL    |       |
+| studentdob   | date        | NO   |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student(11,'raj',30000,'2002-2-12');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '11,'raj',30000,'2002-2-12')' at line 1
+mysql> insert into student(studentid,studentname,studentfees,studentdob) values(12,'raj',76889,'2002-10-27');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++-----------+-------------+--------------+-------------+------------+
+| studentid | studentname | studentemail | studentfees | studentdob |
++-----------+-------------+--------------+-------------+------------+
+|         1 | shraddha    | shraddha@123 |     40000.6 | 2002-10-27 |
+|         2 | sammed      | sammed@123   |     20000.6 | 2005-10-22 |
+|        12 | raj         | NULL         |       76889 | 2002-10-27 |
++-----------+-------------+--------------+-------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into student(studentid,studentname,studentfees,studentdob) values(13,'sham',76889,'2002-10-27');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++-----------+-------------+--------------+-------------+------------+
+| studentid | studentname | studentemail | studentfees | studentdob |
++-----------+-------------+--------------+-------------+------------+
+|         1 | shraddha    | shraddha@123 |     40000.6 | 2002-10-27 |
+|         2 | sammed      | sammed@123   |     20000.6 | 2005-10-22 |
+|        12 | raj         | NULL         |       76889 | 2002-10-27 |
+|        13 | sham        | NULL         |       76889 | 2002-10-27 |
++-----------+-------------+--------------+-------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer where studentemail like 'NULL';
+ERROR 1054 (42S22): Unknown column 'studentemail' in 'where clause'
+mysql> select * from student where studentemail like 'NULL';
+Empty set (0.00 sec)
+
+mysql> select * from student where studentemail is null;
++-----------+-------------+--------------+-------------+------------+
+| studentid | studentname | studentemail | studentfees | studentdob |
++-----------+-------------+--------------+-------------+------------+
+|        12 | raj         | NULL         |       76889 | 2002-10-27 |
+|        13 | sham        | NULL         |       76889 | 2002-10-27 |
++-----------+-------------+--------------+-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where studentemail is NULL;
++-----------+-------------+--------------+-------------+------------+
+| studentid | studentname | studentemail | studentfees | studentdob |
++-----------+-------------+--------------+-------------+------------+
+|        12 | raj         | NULL         |       76889 | 2002-10-27 |
+|        13 | sham        | NULL         |       76889 | 2002-10-27 |
++-----------+-------------+--------------+-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where studentemail NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NULL' at line 1
+mysql> select * from student where studentemail IS NOT NULL;
++-----------+-------------+--------------+-------------+------------+
+| studentid | studentname | studentemail | studentfees | studentdob |
++-----------+-------------+--------------+-------------+------------+
+|         1 | shraddha    | shraddha@123 |     40000.6 | 2002-10-27 |
+|         2 | sammed      | sammed@123   |     20000.6 | 2005-10-22 |
++-----------+-------------+--------------+-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from product order by price;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+|   1 | Phone  |  3000 |
+|   3 | Tablet | 10000 |
+|   2 | Laptop | 20000 |
++-----+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product order by price asc;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+|   1 | Phone  |  3000 |
+|   3 | Tablet | 10000 |
+|   2 | Laptop | 20000 |
++-----+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product order by price desc;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+|   2 | Laptop | 20000 |
+|   3 | Tablet | 10000 |
+|   1 | Phone  |  3000 |
++-----+--------+-------+
+3 rows in set (0.00 sec)
+
+
+mysql> select * from product order by pname desc;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+|   3 | Tablet | 10000 |
+|   1 | Phone  |  3000 |
+|   2 | Laptop | 20000 |
++-----+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product order by pid desc;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+|   3 | Tablet | 10000 |
+|   2 | Laptop | 20000 |
+|   1 | Phone  |  3000 |
++-----+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product order by pid asc;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+|   1 | Phone  |  3000 |
+|   2 | Laptop | 20000 |
+|   3 | Tablet | 10000 |
++-----+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product order by pname asc;
++-----+--------+-------+
+| pid | pname  | price |
++-----+--------+-------+
+|   2 | Laptop | 20000 |
+|   1 | Phone  |  3000 |
+|   3 | Tablet | 10000 |
++-----+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select sum(price) from product;
++------------+
+| sum(price) |
++------------+
+|      33000 |
++------------+
+1 row in set (0.12 sec)
+
+mysql> select sum(price) "total price" from product;
++-------------+
+| total price |
++-------------+
+|       33000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(price) as total_price from product;
++-------------+
+| total_price |
++-------------+
+|       33000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select pname "product name" from product;
++--------------+
+| product name |
++--------------+
+| Phone        |
+| Laptop       |
+| Tablet       |
++--------------+
+3 rows in set (0.00 sec)mysql> select sum(price) as total_price from product;
++-------------+
+| total_price |
++-------------+
+|       33000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select pname "product name" from product;
++--------------+
+| product name |
++--------------+
+| Phone        |
+| Laptop       |
+| Tablet       |
++--------------+
+3 rows in set (0.00 sec)
+
+mysql> select pname as product_name from product;
++--------------+
+| product_name |
++--------------+
+| Phone        |
+| Laptop       |
+| Tablet       |
++--------------+
+3 rows in set (0.00 sec)
+
+mysql> select avg(price) from product;
++------------+
+| avg(price) |
++------------+
+|      11000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(price) "Averrage Price" from product;
++----------------+
+| Averrage Price |
++----------------+
+|          11000 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select min(price) from product;
++------------+
+| min(price) |
++------------+
+|       3000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select max(price) from product;
++------------+
+| max(price) |
++------------+
+|      20000 |
++------------+
+1 row in set (0.00 sec)
