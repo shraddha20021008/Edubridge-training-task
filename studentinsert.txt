@@ -1,0 +1,63 @@
+package com.edu;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class StudentInsert {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		
+		String driver ="com.mysql.cj.jdbc.Driver";
+		String  url ="jdbc:mysql://localhost:3306/batch10426";
+		String un="root";
+		String pass ="root";
+		Connection conn = null;
+		Statement stmt = null;
+		
+		int sid=0;
+		String sname;
+		
+		String semail;
+		float sfees;
+		String dob;
+		
+		Scanner sc=new Scanner(System.in);
+	//	System.out.println("Enter id");
+	//	sid=sc.nextInt();
+		System.out.println("Enter name");
+		sname=sc.next();
+		System.out.println("Enter Email");
+		semail=sc.next();
+		System.out.println("Enter fees");
+		sfees=sc.nextFloat();
+		System.out.println("Enter DOB");
+		dob=sc.next();
+		
+		Class.forName(driver);
+		conn = DriverManager.getConnection(url,un,pass);
+		stmt = conn.createStatement();
+	
+		String s="select max(studentid)+1 as id from student";
+		ResultSet rs=stmt.executeQuery(s);
+		if(rs.next()) {
+			sid=rs.getInt("id");
+		}
+		
+		
+		String ins = "insert into student(studentid,studentname,studentemail,studentfees,studentdob) values("+sid+",'"+sname+"','"+semail+"',"+sfees+",'"+dob+"')";
+int i = stmt.executeUpdate(ins);
+		
+		System.out.println("i="+i);
+		
+		if(i>0) {
+			System.out.println("Record added");
+		}else {
+			System.out.println("Error occured");
+		}
+		
+	
+	}}
